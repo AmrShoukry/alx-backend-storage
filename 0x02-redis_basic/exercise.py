@@ -8,6 +8,7 @@ from functools import wraps
 
 
 def count_calls(method: Callable) -> Callable:
+    """ COUNT CALLS """
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         key = method.__qualname__
