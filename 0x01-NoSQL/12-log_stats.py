@@ -32,7 +32,7 @@ if __name__ == '__main__':
         elif (document['method'] == 'DELETE'):
             delete += 1
 
-    print(f'{x} logs:')
+    print(f'{x} logs')
     print('Methods:')
     print(f'\tmethod GET: {get}')
     print(f'\tmethod POST: {post}')
