@@ -11,6 +11,7 @@ def count_calls(method: Callable) -> Callable:
     """ COUNT CALLS """
     @wraps(method)
     def wrapper(self, *args, **kwargs):
+        """ WRAPPER """
         key = method.__qualname__
         self._redis.incr(key)
         return method(self, *args)
@@ -18,8 +19,10 @@ def count_calls(method: Callable) -> Callable:
 
 
 def call_history(method: Callable) -> Callable:
+    """ CALL HISTORY """
     @wraps(method)
     def wrapper(self, *args, **kwargs):
+        """ WRAPPER """
         key = str(args)
         ukey = method(self, key)
         self._redis.rpush("{}:inputs".format(method.__qualname__), key)
