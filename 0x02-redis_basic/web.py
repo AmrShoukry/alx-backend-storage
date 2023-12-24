@@ -16,18 +16,17 @@ def TrackUrl(method: Callable) -> Callable:
         url = args[0]
         key = f'count:{url}'
         cache.incr(key, 1)
-        cache.expire(key, 10)
-        return method(url)
+        page = method(url)
+        cache.setex("page", 10, page)
+        return page
     return wrapper
 
 
 @TrackUrl
 def get_page(url: str) -> str:
     """ GET PAGE """
-    cache = redis.Redis()
     try:
-        requests.get(url)
-        key = f'count:{url}'
-        return (cache.get(key))
+        request = requests.get(url)
+        return request.text
     except Exception:
-        return "0".encode('utf-8')
+        return ""
