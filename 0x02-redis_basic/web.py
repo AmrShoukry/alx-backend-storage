@@ -15,6 +15,8 @@ def TrackUrl(method: Callable) -> Callable:
         cache = redis.Redis()
         url = args[0]
         key = f'count:{url}'
+        if cache.get("page"):
+            return method(url)
         cache.incr(key, 1)
         page = method(url)
         cache.setex("page", 10, page)
